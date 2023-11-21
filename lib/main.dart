@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx/controllers/orang_controller.dart';
+import 'package:getx/controllers/counter_controller.dart';
 
 void main() {
+  // ignore: prefer_const_constructors
   runApp(MyApp());
 }
 
@@ -10,10 +11,11 @@ void main() {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  var orangC = Get.put(OrangController());
+  final counterContrl = Get.put(CounterController());
 
   @override
   Widget build(BuildContext context) {
+   
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -24,14 +26,16 @@ class MyApp extends StatelessWidget {
         body: Center(
           child: Obx(
             () => Text(
-              'Nama saya ${orangC.orangInstanceController.nama}',
+              'Data ${counterContrl.counter}',
               style: const TextStyle(fontSize: 35),
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(onPressed: () {
-          orangC.changeUpperCase();
-        },),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            counterContrl.increment();  
+          },
+        ),
       ),
     );
   }
