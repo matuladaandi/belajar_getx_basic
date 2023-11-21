@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx/models/orang.dart';
+import 'package:getx/controllers/orang_controller.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,8 +9,8 @@ void main() {
 // ignore: must_be_immutable
 class MyApp extends StatelessWidget {
   MyApp({super.key});
-  var orang1 =
-      Orang(nama: 'andi', umur: 23).obs; // mengubah class biasa menjadi obs
+
+  var orangC = Get.put(OrangController());
 
   @override
   Widget build(BuildContext context) {
@@ -24,20 +24,14 @@ class MyApp extends StatelessWidget {
         body: Center(
           child: Obx(
             () => Text(
-              'Nama saya ${orang1.value.nama}',
+              'Nama saya ${orangC.orangInstanceController.nama}',
               style: const TextStyle(fontSize: 35),
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            orang1.update(
-              (modelkembalian) {
-                orang1.value.nama = orang1.value.nama.toString().toUpperCase();
-              },
-            );
-          },
-        ),
+        floatingActionButton: FloatingActionButton(onPressed: () {
+          orangC.changeUpperCase();
+        },),
       ),
     );
   }
