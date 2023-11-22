@@ -9,13 +9,10 @@ void main() {
 
 // ignore: must_be_immutable
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
-
-  final counterContrl = Get.put(CounterController());
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-   
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -24,16 +21,17 @@ class MyApp extends StatelessWidget {
           centerTitle: true,
         ),
         body: Center(
-          child: Obx(
-            () => Text(
-              'Data ${counterContrl.counter}',
+          child: GetX<CounterController>(
+            init: CounterController(), // nama class CounterController()
+            builder: (controller) => Text(
+              'Data ${controller.counter.value}',
               style: const TextStyle(fontSize: 35),
             ),
           ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            counterContrl.increment();  
+            Get.find<CounterController>().increment();
           },
         ),
       ),
