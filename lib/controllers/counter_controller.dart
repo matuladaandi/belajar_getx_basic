@@ -5,6 +5,6 @@ class CounterController extends GetxController {
 
   void increment(){
     counter++;
-    update();
+    update(["12","13"]); // hanya  id yg berada di ini [] yg bisa diupdate 
   }
 }

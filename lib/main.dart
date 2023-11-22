@@ -9,7 +9,9 @@ void main() {
 
 // ignore: must_be_immutable
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final counterCtrl = Get.put(CounterController());
 
   @override
   Widget build(BuildContext context) {
@@ -21,17 +23,42 @@ class MyApp extends StatelessWidget {
           centerTitle: true,
         ),
         body: Center(
-          child: GetBuilder<CounterController>(
-            init: CounterController(), // nama class CounterController()
-            builder: (controller) => Text(
-              'Data ${controller.counter}',
-              style: const TextStyle(fontSize: 35),
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // simple GetBuilder()
+            GetBuilder<CounterController>(
+              id: "12",  // id bertipe object, Hnaya ada di GetBuilder()
+              builder: (_) {
+                return Text(
+                  'Angka ${counterCtrl.counter}',
+                  style: const TextStyle(fontSize: 35),
+                );
+              },
             ),
-          ),
-        ),
+            GetBuilder<CounterController>(
+              id: "13",
+              builder: (_) {
+                return Text(
+                  'Angka ${counterCtrl.counter}',
+                  style: const TextStyle(fontSize: 35),
+                );
+              },
+            ),
+            GetBuilder<CounterController>(
+              id: "14",
+              builder: (_) {
+                return Text(
+                  'Angka ${counterCtrl.counter}',
+                  style: const TextStyle(fontSize: 35),
+                );
+              },
+            ),
+          ],
+        )),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Get.find<CounterController>().increment();
+            counterCtrl.increment();
           },
         ),
       ),
