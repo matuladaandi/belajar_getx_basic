@@ -21,10 +21,10 @@ class MyApp extends StatelessWidget {
           centerTitle: true,
         ),
         body: Center(
-          child: GetX<CounterController>(
+          child: GetBuilder<CounterController>(
             init: CounterController(), // nama class CounterController()
             builder: (controller) => Text(
-              'Data ${controller.counter.value}',
+              'Data ${controller.counter}',
               style: const TextStyle(fontSize: 35),
             ),
           ),
