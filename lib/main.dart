@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: HomePage(),
     );
@@ -21,9 +21,7 @@ class MyApp extends StatelessWidget {
 
 // ignore: must_be_immutable
 class HomePage extends StatelessWidget {
-  HomePage({super.key});
-
-  final countC = Get.put(CounterController());
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,66 +31,38 @@ class HomePage extends StatelessWidget {
         centerTitle: true,
         actions: [
           IconButton(
-              onPressed: () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (context) => const OtherPage(),
-                    ),
+              onPressed: () => Get.to(
+                    () => const TextPage(),
                   ),
               icon: const Icon(Icons.refresh))
         ],
       ),
       body: const Center(
-        child: CountWidget(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          countC.add();
-        },
+        child: Text('Home Page'),
       ),
     );
   }
 }
 
-class CountWidget extends StatelessWidget {
-  const CountWidget({super.key});
+class TextPage extends StatelessWidget {
+  const TextPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CounterController>(
-      // GetBuilder() pada GetX bisa melakukan/membuat apa yang dibuat menggunakan statefull
-      initState: (state) => "",
-      didChangeDependencies: (state) => "",
-      didUpdateWidget: (oldWidget, state) => print('diUpdate'),
-      dispose: (state) => print("dispose"),
-      builder: (c) => Text(
-        'Angka ${c.count}',
-        style: const TextStyle(fontSize: 35),
-      ),
-    );
-  }
-}
+    final textC = Get.put(TextController());
 
-class OtherPage extends StatelessWidget {
-  const OtherPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Other Page'),
+        title: const Text('Text Page'),
         centerTitle: true,
+      ),
+      body: TextField(
+        controller: textC.myC,
       ),
     );
   }
 }
 
-class TextController extends GetxController {}
-
-class CounterController extends GetxController {
-  var count = 0;
-
-  void add() {
-    count++;
-    update();
-  }
+class TextController extends GetxController {
+  final myC = TextEditingController();
 }
